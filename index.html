@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Название</title>
+		
+		<script src="build.js"></script>
+	</head>
+	
+	<body>
+		<object id="svgfile" data="./svgfile.svg" type="image/svg+xml"></object>
+		
+
+	</body>
+	
+	<script>
+		window.onload=function() {
+			var object = document.getElementById("svgfile");
+			var svgDocument = object.contentDocument;
+		  
+			var paths = svgDocument.getElementById("_2533620077440").children;
+		  
+			//глобальная переменная скрипта decode.js
+			var localVar = window.storage.globalVar;
+		  
+			var path = paths[0].getAttribute("d");
+			var data = localVar.decode( path );
+			
+			console.log(data);
+		  
+		};
+		
+	</script>
+	
+</html>
