@@ -90,11 +90,13 @@ function earcut(data, holeIndices, dim) {
 
 
     // console.log(arraySquare);
-
+    document.write(
+        '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
+    )
 
     //console.log("dfdf");
 
-    // сортируем массив по убыванию
+    //сортируем массив по убыванию
     // arraySquare = arraySquare.sort(function (b, a) {
     //     return (a[0].square - b[0].square)
     // });
@@ -115,10 +117,10 @@ function earcut(data, holeIndices, dim) {
     //     '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
     // )
 
-    // получить 15% треугольников от числа всех треугольников
-    // console.log(arraySquare.length);
+    // // получить 15% треугольников от числа всех треугольников
+    // // console.log(arraySquare.length);
     // var percent = parseInt((15 * arraySquare.length) / 100);
-    // console.log(percent);
+    // //console.log(percent);
     //
     // for(var i = 0; i < percent; i++){
     //     console.log("X = " + arraySquare[i][0]["centerX"] + "\n");
@@ -542,15 +544,37 @@ function getLeftmost(start) {
     return leftmost;
 }
 
+var textPoints = "";
+var iter = 0;
+
 // check if a point lies within a convex triangle
 function pointInTriangle(ax, ay, bx, by, cx, cy, px, py) {
 
-    getCenter(ax, ay, bx, by, cx, cy);
+    textPoints += "var testPoint" + iter + " = [" + ax + "," + ay + "];\n";
+    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    iter++;
+    textPoints += "var testPoint" + iter + " = [" + bx + "," + by + "];\n";
+    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    iter++;
+    textPoints += "var testPoint" + iter + " = [" + cx + "," + cy + "];\n";
+    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    iter++;
+    textPoints += "var testPoint" + iter + " = [" + px + "," + py + "];\n";
+    textPoints += "drawPoint(testPoint" + iter + ", 'green');\n";
+    iter++;
+
+    // console.log(ax + " | " + ay);
+    // console.log(bx + " | " + by);
+    // console.log(cx + " | " + cy);
+    // console.log(px + " | " + py + "\n\n");
+
+    getCenter(bx, by, cx, cy, px, py);
 
     return (cx - px) * (ay - py) - (ax - px) * (cy - py) >= 0 &&
         (ax - px) * (by - py) - (bx - px) * (ay - py) >= 0 &&
         (bx - px) * (cy - py) - (cx - px) * (by - py) >= 0;
 }
+
 
 // check if a diagonal between two polygon nodes is valid (lies in polygon interior)
 function isValidDiagonal(a, b) {
