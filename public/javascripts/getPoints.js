@@ -27,7 +27,6 @@ $( window ).on( "load", function() {
         // декодируем (извлекаем точки x и y)
         data = localVar.decode( path[i] );
 
-
         for(var t = 0; t < data.length; t++) {
             if(data[t]["rel"] == false)
             {
