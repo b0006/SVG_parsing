@@ -51,7 +51,10 @@ function getCenter(x1, y1, x2, y2, x3, y3)
 
 function earcut(data, holeIndices, dim) {
 
+
+
     dim = dim || 2;
+
 
     var hasHoles = holeIndices && holeIndices.length,
         outerLen = hasHoles ? holeIndices[0] * dim : data.length,
@@ -64,14 +67,18 @@ function earcut(data, holeIndices, dim) {
 
     if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim);
 
+
+
     // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
     if (data.length > 80 * dim) {
         minX = maxX = data[0];
         minY = maxY = data[1];
 
+
         for (var i = dim; i < outerLen; i += dim) {
             x = data[i];
             y = data[i + 1];
+
             if (x < minX) minX = x;
             if (y < minY) minY = y;
             if (x > maxX) maxX = x;
@@ -85,14 +92,16 @@ function earcut(data, holeIndices, dim) {
 
     earcutLinked(outerNode, triangles, dim, minX, minY, invSize);
 
+    // console.log(earcutLinked(outerNode, triangles, dim, minX, minY, invSize));
 
-    //console.log(arraySquare);
+    // console.log(temp);
+    // console.log(arraySquare);
 
 
     // console.log(arraySquare);
-    document.write(
-        '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
-    )
+    // document.write(
+    //     '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
+    // )
 
     //console.log("dfdf");
 
@@ -126,6 +135,8 @@ function earcut(data, holeIndices, dim) {
     //     console.log("X = " + arraySquare[i][0]["centerX"] + "\n");
     //     console.log("Y = " + arraySquare[i][0]["centerY"] + "\n\n");
     // }
+
+     console.log(temp);
 
     return triangles;
 }
@@ -174,10 +185,15 @@ function filterPoints(start, end) {
 
 // main ear slicing loop which triangulates a polygon (given as a linked list)
 function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass) {
-    if (!ear) return;
+
+    if (!ear) {
+        return;
+    }
 
     // interlink polygon nodes in z-order
-    if (!pass && invSize) indexCurve(ear, minX, minY, invSize);
+    if (!pass && invSize) {
+        indexCurve(ear, minX, minY, invSize);
+    }
 
     var stop = ear,
         prev, next;
@@ -223,7 +239,11 @@ function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass) {
             break;
         }
     }
+
+    console.log(triangles);
 }
+
+var temp = [];
 
 // check whether a polygon node forms a valid ear with adjacent nodes
 function isEar(ear) {
@@ -237,6 +257,7 @@ function isEar(ear) {
     var p = ear.next.next;
 
     while (p !== ear.prev) {
+
         if (pointInTriangle(a.x, a.y, b.x, b.y, c.x, c.y, p.x, p.y) &&
             area(p.prev, p, p.next) >= 0) return false;
         p = p.next;
@@ -250,7 +271,25 @@ function isEarHashed(ear, minX, minY, invSize) {
         b = ear,
         c = ear.next;
 
-    if (area(a, b, c) >= 0) return false; // reflex, can't be an ear
+
+    // if( (a.i == 84) || (b.i == 84) || (c.i == 84)) {
+    //     console.log("a:");
+    //     console.log(a);
+    //     console.log("b:");
+    //     console.log(b);
+    //     console.log("c:");
+    //     console.log(c);
+    // }
+
+    //console.log(a);
+    //console.log(b);
+    //console.log(c);
+
+    if (area(a, b, c) >= 0) {
+        return false;
+    } // reflex, can't be an ear
+
+    temp.push({"a" : a, "b" : b, "c" : c});
 
     // triangle bbox; min & max are calculated like this for speed
     var minTX = a.x < b.x ? (a.x < c.x ? a.x : c.x) : (b.x < c.x ? b.x : c.x),
@@ -293,6 +332,8 @@ function isEarHashed(ear, minX, minY, invSize) {
             area(n.prev, n, n.next) >= 0) return false;
         n = n.nextZ;
     }
+
+    temp.push({"tt" : true});
 
     return true;
 }
@@ -550,25 +591,25 @@ var iter = 0;
 // check if a point lies within a convex triangle
 function pointInTriangle(ax, ay, bx, by, cx, cy, px, py) {
 
-    textPoints += "var testPoint" + iter + " = [" + ax + "," + ay + "];\n";
-    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    iter++;
-    textPoints += "var testPoint" + iter + " = [" + bx + "," + by + "];\n";
-    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    iter++;
-    textPoints += "var testPoint" + iter + " = [" + cx + "," + cy + "];\n";
-    textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    iter++;
-    textPoints += "var testPoint" + iter + " = [" + px + "," + py + "];\n";
-    textPoints += "drawPoint(testPoint" + iter + ", 'green');\n";
-    iter++;
+    // textPoints += "var testPoint" + iter + " = [" + ax + "," + ay + "];\n";
+    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    // iter++;
+    // textPoints += "var testPoint" + iter + " = [" + bx + "," + by + "];\n";
+    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    // iter++;
+    // textPoints += "var testPoint" + iter + " = [" + cx + "," + cy + "];\n";
+    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
+    // iter++;
+    // textPoints += "var testPoint" + iter + " = [" + px + "," + py + "];\n";
+    // textPoints += "drawPoint(testPoint" + iter + ", 'green');\n";
+    // iter++;
 
     // console.log(ax + " | " + ay);
     // console.log(bx + " | " + by);
     // console.log(cx + " | " + cy);
     // console.log(px + " | " + py + "\n\n");
 
-    getCenter(bx, by, cx, cy, px, py);
+    //getCenter(bx, by, cx, cy, px, py);
 
     return (cx - px) * (ay - py) - (ax - px) * (cy - py) >= 0 &&
         (ax - px) * (by - py) - (bx - px) * (ay - py) >= 0 &&
