@@ -1,4 +1,6 @@
+
 function handleFileSelect(evt) {
+
     var files = evt.target.files; // FileList object
 
     // Loop through the FileList and render image files as thumbnails.
@@ -20,11 +22,11 @@ function handleFileSelect(evt) {
                 $("div#svg_block").remove();
 
                 // создаем div
-                var div = document.createElement('div');
-                div.setAttribute("id", "svg_block");
+                var div = $("<div id='svg_block'></div>");
+                $("#loaded_svgFile").append(div);
 
-                div.innerHTML = ['<object data="' + e.target.result + '" style="width: 70%; height: 70%;"></object>'].join('');
-                document.getElementById('list').insertBefore(div, null);
+                var object = '<object id="test" data="' + e.target.result + '" style="width: 70%; height: 70%;"></object>';
+                div.append(object);
             };
         })(f);
 
@@ -33,4 +35,25 @@ function handleFileSelect(evt) {
     }
 }
 
-document.getElementById('svg_files').addEventListener('change', handleFileSelect, false);
+function goToReadSvgFile() {
+
+    var parent = $('#test');
+    console.log(parent.content.textContent);
+}
+
+
+$('body').on('change','#svg_files', function(e){
+    handleFileSelect(e);
+});
+
+$('body').on('click','#go', function(e){
+    goToReadSvgFile();
+});
+
+
+
+
+
+
+
+

@@ -17,9 +17,6 @@ $( window ).on( "load", function() {
     var absoluteX = 0;
     var absoluteY = 0;
 
-    var relativeX = 0;
-    var relativeY = 0;
-
     for(var i = 0; i < paths.length; i++)
     {
         // получаем каждый аттрибут "d"
@@ -42,13 +39,6 @@ $( window ).on( "load", function() {
                 if(typeof data[t]['x'] !== "undefined")
                 {
                     try {
-                        /*if ((typeof data[t]['x'] !== "undefined") && (typeof data[t + 1]['x'] === "undefined"))
-                        {
-                            //data[t].splice(t, 1);
-                            //data[t + 1]["x"] = data[t]["x"];
-                            //data[t + 1]["y"] = data[t]["y"];
-
-                        }*/
                         absoluteX = absoluteX + data[t]["x"];
                         absoluteY = absoluteY + data[t]["y"];
                         arPointsPathD.push({ x: absoluteX, y: absoluteY });
@@ -70,29 +60,11 @@ $( window ).on( "load", function() {
         }
     }
 
-    // console.log(data);
-    // console.log("-------------");
-    // console.log(arPointsPathD);
+    /***
+     * ПОЛУЧИЛИ АБСОЛЮТНЫЕ ЗНАЧЕНИЯ КООРДИНАТ ПОЛИГОНА
+     */
+    console.log(arPointsPathD);
 
-    // var textPoints = "";
-
-    // for(var i = 0; i < arPointsPathD.length; i++){
-    //     textPoints += "var text" + i + " = document.createElementNS('http://www.w3.org/2000/svg', 'text');\n";
-    //     textPoints += "text" + i + ".setAttribute(\"x\", " + arPointsPathD[i]["x"] + ");\n";
-    //     textPoints += "text" + i + ".setAttribute(\"y\", " + arPointsPathD[i]["y"] + ");\n";
-    //     textPoints += "text" + i + ".setAttribute('style', 'font-size: 25px;');\n";
-    //     textPoints += "text" + i + ".innerHTML = '+';\n";
-    //     textPoints += "var gg" + i + " = svgDocument.getElementById(\"test\");\n";
-    //     textPoints += "gg" + i + ".appendChild(text" + i + ");\n\n";
-    // }
-
-    // for(var i = 0; i < arPointsPathD.length; i++){
-    //     textPoints += "  [" + arPointsPathD[i]["x"] + ", " + arPointsPathD[i]["y"] + "],\n";
-    // }
-    //
-    // document.write(
-    //     '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
-    // )
 
     /*for(var i = 0; i < paths.length; i++)
     {
@@ -126,74 +98,71 @@ $( window ).on( "load", function() {
             //console.log("x = " + data[t].x + " y = " + data[t].y);
         }*/
 
-    var text0 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text0.setAttribute("x", 2590);
-    text0.setAttribute("y", 3182);
-    text0.setAttribute('style', 'font-size: 25px;');
-    text0.innerHTML = '1';
-    var gg0 = svgDocument.getElementById("test");
-    gg0.appendChild(text0);
+    // var text0 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text0.setAttribute("x", 2590);
+    // text0.setAttribute("y", 3182);
+    // text0.setAttribute('style', 'font-size: 25px;');
+    // text0.innerHTML = '1';
+    // var gg0 = svgDocument.getElementById("test");
+    // gg0.appendChild(text0);
+    //
+    // var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text1.setAttribute("x", 2483);
+    // text1.setAttribute("y", 3099);
+    // text1.setAttribute('style', 'font-size: 25px;');
+    // text1.innerHTML = '2';
+    // var gg1 = svgDocument.getElementById("test");
+    // gg1.appendChild(text1);
+    //
+    // var text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text2.setAttribute("x", 2020);
+    // text2.setAttribute("y", 3088);
+    // text2.setAttribute('style', 'font-size: 25px;');
+    // text2.innerHTML = '3';
+    // var gg2 = svgDocument.getElementById("test");
+    // gg2.appendChild(text2);
+    //
+    // var text3 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text3.setAttribute("x", 2259);
+    // text3.setAttribute("y", 3261);
+    // text3.setAttribute('style', 'font-size: 25px;');
+    // text3.innerHTML = '4';
+    // var gg3 = svgDocument.getElementById("test");
+    // gg3.appendChild(text3);
+    //
+    // var text4 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text4.setAttribute("x", 2532);
+    // text4.setAttribute("y", 3271);
+    // text4.setAttribute('style', 'font-size: 25px;');
+    // text4.innerHTML = '5';
+    // var gg4 = svgDocument.getElementById("test");
+    // gg4.appendChild(text4);
+    //
+    // var text5 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text5.setAttribute("x", 1943);
+    // text5.setAttribute("y", 3051);
+    // text5.setAttribute('style', 'font-size: 25px;');
+    // text5.innerHTML = '6';
+    // var gg5 = svgDocument.getElementById("test");
+    // gg5.appendChild(text5);
+    //
+    // var text6 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text6.setAttribute("x", 2096);
+    // text6.setAttribute("y", 3194);
+    // text6.setAttribute('style', 'font-size: 25px;');
+    // text6.innerHTML = '7';
+    // var gg6 = svgDocument.getElementById("test");
+    // gg6.appendChild(text6);
+    //
+    // var text7 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // text7.setAttribute("x", 2575);
+    // text7.setAttribute("y", 2999);
+    // text7.setAttribute('style', 'font-size: 25px;');
+    // text7.innerHTML = '8';
+    // var gg7 = svgDocument.getElementById("test");
+    // gg7.appendChild(text7);
 
-    var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text1.setAttribute("x", 2483);
-    text1.setAttribute("y", 3099);
-    text1.setAttribute('style', 'font-size: 25px;');
-    text1.innerHTML = '2';
-    var gg1 = svgDocument.getElementById("test");
-    gg1.appendChild(text1);
+    // console.log(result_centers);
 
-    var text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text2.setAttribute("x", 2020);
-    text2.setAttribute("y", 3088);
-    text2.setAttribute('style', 'font-size: 25px;');
-    text2.innerHTML = '3';
-    var gg2 = svgDocument.getElementById("test");
-    gg2.appendChild(text2);
-
-    var text3 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text3.setAttribute("x", 2259);
-    text3.setAttribute("y", 3261);
-    text3.setAttribute('style', 'font-size: 25px;');
-    text3.innerHTML = '4';
-    var gg3 = svgDocument.getElementById("test");
-    gg3.appendChild(text3);
-
-    var text4 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text4.setAttribute("x", 2532);
-    text4.setAttribute("y", 3271);
-    text4.setAttribute('style', 'font-size: 25px;');
-    text4.innerHTML = '5';
-    var gg4 = svgDocument.getElementById("test");
-    gg4.appendChild(text4);
-
-    var text5 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text5.setAttribute("x", 1943);
-    text5.setAttribute("y", 3051);
-    text5.setAttribute('style', 'font-size: 25px;');
-    text5.innerHTML = '6';
-    var gg5 = svgDocument.getElementById("test");
-    gg5.appendChild(text5);
-
-    var text6 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text6.setAttribute("x", 2096);
-    text6.setAttribute("y", 3194);
-    text6.setAttribute('style', 'font-size: 25px;');
-    text6.innerHTML = '7';
-    var gg6 = svgDocument.getElementById("test");
-    gg6.appendChild(text6);
-
-    var text7 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text7.setAttribute("x", 2575);
-    text7.setAttribute("y", 2999);
-    text7.setAttribute('style', 'font-size: 25px;');
-    text7.innerHTML = '8';
-    var gg7 = svgDocument.getElementById("test");
-    gg7.appendChild(text7);
-
-
-
-    /*document.write(
-        '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(textPoints) + '" download="text.txt">text.txt</a>'
-    )*/
 
 });
