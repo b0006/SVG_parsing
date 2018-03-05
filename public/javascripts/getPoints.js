@@ -127,102 +127,68 @@ $( window ).on( "load", function() {
         }*/
 
     var text0 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text0.setAttribute("x", 2482);
-    text0.setAttribute("y", 3184);
+    text0.setAttribute("x", 2590);
+    text0.setAttribute("y", 3182);
     text0.setAttribute('style', 'font-size: 25px;');
     text0.innerHTML = '1';
     var gg0 = svgDocument.getElementById("test");
     gg0.appendChild(text0);
 
     var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text1.setAttribute("x", 2482);
-    text1.setAttribute("y", 3184);
+    text1.setAttribute("x", 2483);
+    text1.setAttribute("y", 3099);
     text1.setAttribute('style', 'font-size: 25px;');
     text1.innerHTML = '2';
     var gg1 = svgDocument.getElementById("test");
     gg1.appendChild(text1);
 
     var text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text2.setAttribute("x", 2590);
-    text2.setAttribute("y", 3182);
+    text2.setAttribute("x", 2020);
+    text2.setAttribute("y", 3088);
     text2.setAttribute('style', 'font-size: 25px;');
     text2.innerHTML = '3';
     var gg2 = svgDocument.getElementById("test");
     gg2.appendChild(text2);
 
     var text3 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text3.setAttribute("x", 2303);
-    text3.setAttribute("y", 3213);
+    text3.setAttribute("x", 2259);
+    text3.setAttribute("y", 3261);
     text3.setAttribute('style', 'font-size: 25px;');
     text3.innerHTML = '4';
     var gg3 = svgDocument.getElementById("test");
     gg3.appendChild(text3);
 
     var text4 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text4.setAttribute("x", 2533);
-    text4.setAttribute("y", 3216);
+    text4.setAttribute("x", 2532);
+    text4.setAttribute("y", 3271);
     text4.setAttribute('style', 'font-size: 25px;');
     text4.innerHTML = '5';
     var gg4 = svgDocument.getElementById("test");
     gg4.appendChild(text4);
 
     var text5 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text5.setAttribute("x", 2560);
-    text5.setAttribute("y", 3234);
+    text5.setAttribute("x", 1943);
+    text5.setAttribute("y", 3051);
     text5.setAttribute('style', 'font-size: 25px;');
     text5.innerHTML = '6';
     var gg5 = svgDocument.getElementById("test");
     gg5.appendChild(text5);
 
     var text6 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text6.setAttribute("x", 2262);
-    text6.setAttribute("y", 3232);
+    text6.setAttribute("x", 2096);
+    text6.setAttribute("y", 3194);
     text6.setAttribute('style', 'font-size: 25px;');
     text6.innerHTML = '7';
     var gg6 = svgDocument.getElementById("test");
     gg6.appendChild(text6);
 
     var text7 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text7.setAttribute("x", 2329);
-    text7.setAttribute("y", 3232);
+    text7.setAttribute("x", 2575);
+    text7.setAttribute("y", 2999);
     text7.setAttribute('style', 'font-size: 25px;');
     text7.innerHTML = '8';
     var gg7 = svgDocument.getElementById("test");
     gg7.appendChild(text7);
-
-    var text8 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text8.setAttribute("x", 2483);
-    text8.setAttribute("y", 3099);
-    text8.setAttribute('style', 'font-size: 25px;');
-    text8.innerHTML = '9';
-    var gg8 = svgDocument.getElementById("test");
-    gg8.appendChild(text8);
-
-    var text9 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text9.setAttribute("x", 2020);
-    text9.setAttribute("y", 3088);
-    text9.setAttribute('style', 'font-size: 25px;');
-    text9.innerHTML = '10';
-    var gg9 = svgDocument.getElementById("test");
-    gg9.appendChild(text9);
-
-    var text10 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text10.setAttribute("x", 2243);
-    text10.setAttribute("y", 3239);
-    text10.setAttribute('style', 'font-size: 25px;');
-    text10.innerHTML = '11';
-    var gg10 = svgDocument.getElementById("test");
-    gg10.appendChild(text10);
-
-    var text11 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text11.setAttribute("x", 2237);
-    text11.setAttribute("y", 3241);
-    text11.setAttribute('style', 'font-size: 25px;');
-    text11.innerHTML = '12';
-    var gg11 = svgDocument.getElementById("test");
-    gg11.appendChild(text11);
-
-
 
 
 

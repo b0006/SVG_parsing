@@ -193,76 +193,29 @@ for (i = 0; i < result.length; i++) {
 
 ctx.lineJoin = 'round';
 
-function drawTest() {
-    var testPoint1 = [1842, 2924];
-    drawPoint(testPoint1, 'red');
-    var testPoint2 = [1850, 2890];
-    drawPoint(testPoint2, 'red');
-    var testPoint3 = [1925, 2905];
-    drawPoint(testPoint3, 'red');
-
-    var testPoint4 = [1925, 2905];
-    drawPoint(testPoint4, 'green');
-    var testPoint5 = [1974, 2867];
-    drawPoint(testPoint5, 'green');
-    var testPoint6 = [1942, 2935];
-    drawPoint(testPoint6, 'green');
-
-    var testPoint4 = [1985, 2962];
-    drawPoint(testPoint4, 'blue');
-    var testPoint5 = [2008, 2933];
-    drawPoint(testPoint5, 'blue');
-    var testPoint6 = [2035, 2933];
-    drawPoint(testPoint6, 'blue');
-
-    var testPoint1 = [2056, 2981];
-    drawPoint(testPoint1, 'red');
-    var testPoint2 = [2094, 3019];
-    drawPoint(testPoint2, 'red');
-    var testPoint3 = [2079, 3029];
-    drawPoint(testPoint3, 'red');
-
-    var testPoint4 = [2068, 3041];
-    drawPoint(testPoint4, 'green');
-    var testPoint5 = [2154, 3078];
-    drawPoint(testPoint5, 'green');
-    var testPoint6 = [2137, 3105];
-    drawPoint(testPoint6, 'green');
-
-    var testPoint1 = [2137, 3105];
-    drawPoint(testPoint1, 'red');
-    var testPoint2 = [2161, 3124];
-    drawPoint(testPoint2, 'red');
-    var testPoint3 = [2120, 3137];
-    drawPoint(testPoint3, 'red');
-
-    var testPoint4 = [2120, 3137];
-    drawPoint(testPoint4, 'blue');
-    var testPoint5 = [2152, 3146];
-    drawPoint(testPoint5, 'blue');
-    var testPoint6 = [2197, 3194];
-    drawPoint(testPoint6, 'blue');
-}
-
-drawTest();
+// function drawTest() {
+//
+// }
+//
+// drawTest();
 
 // понял, тип точки повторяются и получаются всякие треугольники
 // нужно отфильтровать и получить нужные
 // всего треугольников в этом полигоне около 80, а по итогу кода сейчас якобы тут около 400
 
 
-// получить 15% треугольников от числа всех треугольников
-var percent = parseInt((15 * arraySquare.length) / 100);
-var point = [];
-
-for(var i = 0; i < percent; i++){
-    point = [arraySquare[i][0]["centerX"], arraySquare[i][0]["centerY"]];
-    //drawPoint(point, "grey");
-}
+// // получить 15% треугольников от числа всех треугольников
+// var percent = parseInt((15 * arraySquare.length) / 100);
+// var point = [];
+//
+// for(var i = 0; i < percent; i++){
+//     point = [arraySquare[i][0]["centerX"], arraySquare[i][0]["centerY"]];
+//     //drawPoint(point, "grey");
+// }
 
 
 for (i = 0; triangles && i < triangles.length; i += 3) {
-    drawPoly([triangles.slice(i, i + 3)], 'rgba(255,0,0,0.2)', 'rgba(255,255,0,0.2)');
+    // drawPoly([triangles.slice(i, i + 3)], 'rgba(255,0,0,0.2)', 'rgba(255,255,0,0.2)');
     // drawPoly([triangles.slice(i, i + 3)], 'rgba(255,0,0,0.0)', 'rgba(255,0,0,0.3)');
 }
 
@@ -272,6 +225,8 @@ function drawPoint(p, color) {
     ctx.fillStyle = color || 'grey';
     ctx.fillRect(x - 3, y - 3, 4, 4);
 }
+
+
 
 function drawPoly(rings, color, fill) {
     ctx.beginPath();
@@ -294,4 +249,78 @@ function drawPoly(rings, color, fill) {
     if (fill) ctx.fill('evenodd');
 }
 
-//console.log(arraySquare);
+//------------------
+var centerPoints = [];
+
+function getCenter(x1, y1, x2, y2, x3, y3)
+{
+    // считаем площадь текущего треугольника
+    var points = [(x1 - x3), (x2 - x3), (y1 - y3), (y2 - y3)];
+    var square = parseInt( ((points[0] * points[3]) - (points[1] * points[2])) / 2);
+
+    // находим центр тяжести текущего треугольника
+    var mediumX = parseInt((x1 + x2 + x3) / 3);
+    var mediumY = parseInt((y1 + y2 + y3) / 3);
+
+    centerPoints.push({
+        "centerX" : mediumX,
+        "centerY" : mediumY,
+        "square" : square
+    });
+
+}
+
+for(var i = 0, ii = i + 1, iii = + 2; i < arPointTriangles.length; i++, ii++, iii++) {
+
+
+    getCenter(
+        arPointTriangles[i]["a"]["x"], arPointTriangles[i]["a"]["y"],
+        arPointTriangles[i]["b"]["x"], arPointTriangles[i]["b"]["y"],
+        arPointTriangles[i]["c"]["x"], arPointTriangles[i]["c"]["y"]
+    );
+
+}
+
+//сортируем массив по убыванию
+centerPoints = centerPoints.sort(function (b, a) {
+    return (a.square - b.square)
+});
+
+// console.log(arPointTriangles);
+
+// %
+var target_percent = 9;
+// получить % треугольников от числа всех треугольников
+var percent = parseInt((target_percent * centerPoints.length) / 100);
+for(var i = 0; i < percent; i++){
+    // drawPoint([centerPoints[i]["centerX"], centerPoints[i]["centerY"]], "green");
+    console.log(centerPoints[i]["centerX"]);
+    console.log(centerPoints[i]["centerY"]);
+    console.log("\n");
+}
+
+
+function drawTest() {
+    var testPoint1 = [2590, 3182];
+    drawPoint(testPoint1, '#ffffff');
+    var testPoint2 = [2483, 3099];
+    drawPoint(testPoint2, 'red');
+    var testPoint3 = [1925, 2905];
+    drawPoint(testPoint3, 'red');
+
+    var testPoint4 = [1842, 2924];
+    drawPoint(testPoint4, '#ffffff');
+    var testPoint5 = [1850, 2890];
+    drawPoint(testPoint5, 'red');
+    var testPoint6 = [1925, 2905];
+    drawPoint(testPoint6, 'red');
+
+    var testPoint7 = [1842, 2924];
+    drawPoint(testPoint7, '#ffffff');
+    var testPoint8 = [1850, 2890];
+    drawPoint(testPoint8, 'red');
+    var testPoint9 = [1925, 2905];
+    drawPoint(testPoint9, 'red');
+}
+
+// drawTest();

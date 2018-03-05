@@ -8,41 +8,41 @@ module.exports.default = earcut;
 // ---------------------------------
 
 // глобальная переменная
-var arraySquare = [];
+// var arraySquare = [];
 
-function getCenter(x1, y1, x2, y2, x3, y3)
-{
-    // считаем площадь текущего треугольника
-    var points = [(x1 - x3), (x2 - x3), (y1 - y3), (y2 - y3)];
-    var square = parseInt( ((points[0] * points[3]) - (points[1] * points[2])) / 2);
-
-    // находим центр тяжести текущего треугольника
-    var mediumX = parseInt((x1 + x2 + x3) / 3);
-    var mediumY = parseInt((y1 + y2 + y3) / 3);
-
-    // формируем ассоциативный массив
-    var sizeArraySquare = arraySquare.length;
-
-    if(sizeArraySquare == 0){
-        arraySquare.push([{
-            "square" : square,
-            "centerX" : mediumX,
-            "centerY" : mediumY
-        }]);
-    }
-    else if(sizeArraySquare > 0)
-    {
-        // могут попасться дубликаты. Их не добавляем
-        // sizeArraySquare - как размер массива (играет роль индекса)
-        if(arraySquare[sizeArraySquare - 1][0]["square"] != square){
-            arraySquare.push([{
-                "square" : square,
-                "centerX" : mediumX,
-                "centerY" : mediumY
-            }]);
-        }
-    }
-}
+// function getCenter(x1, y1, x2, y2, x3, y3)
+// {
+//     // считаем площадь текущего треугольника
+//     var points = [(x1 - x3), (x2 - x3), (y1 - y3), (y2 - y3)];
+//     var square = parseInt( ((points[0] * points[3]) - (points[1] * points[2])) / 2);
+//
+//     // находим центр тяжести текущего треугольника
+//     var mediumX = parseInt((x1 + x2 + x3) / 3);
+//     var mediumY = parseInt((y1 + y2 + y3) / 3);
+//
+//     // формируем ассоциативный массив
+//     var sizeArraySquare = arraySquare.length;
+//
+//     if(sizeArraySquare == 0){
+//         arraySquare.push([{
+//             "square" : square,
+//             "centerX" : mediumX,
+//             "centerY" : mediumY
+//         }]);
+//     }
+//     else if(sizeArraySquare > 0)
+//     {
+//         // могут попасться дубликаты. Их не добавляем
+//         // sizeArraySquare - как размер массива (играет роль индекса)
+//         if(arraySquare[sizeArraySquare - 1][0]["square"] != square){
+//             arraySquare.push([{
+//                 "square" : square,
+//                 "centerX" : mediumX,
+//                 "centerY" : mediumY
+//             }]);
+//         }
+//     }
+// }
 
 
 // ---------------------------------
@@ -50,11 +50,7 @@ function getCenter(x1, y1, x2, y2, x3, y3)
 // ---------------------------------
 
 function earcut(data, holeIndices, dim) {
-
-
-
     dim = dim || 2;
-
 
     var hasHoles = holeIndices && holeIndices.length,
         outerLen = hasHoles ? holeIndices[0] * dim : data.length,
@@ -66,8 +62,6 @@ function earcut(data, holeIndices, dim) {
     var minX, minY, maxX, maxY, x, y, invSize;
 
     if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim);
-
-
 
     // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
     if (data.length > 80 * dim) {
@@ -135,8 +129,6 @@ function earcut(data, holeIndices, dim) {
     //     console.log("X = " + arraySquare[i][0]["centerX"] + "\n");
     //     console.log("Y = " + arraySquare[i][0]["centerY"] + "\n\n");
     // }
-
-     console.log(temp);
 
     return triangles;
 }
@@ -239,11 +231,9 @@ function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass) {
             break;
         }
     }
-
-    console.log(triangles);
 }
 
-var temp = [];
+var arPointTriangles = [];
 
 // check whether a polygon node forms a valid ear with adjacent nodes
 function isEar(ear) {
@@ -271,25 +261,9 @@ function isEarHashed(ear, minX, minY, invSize) {
         b = ear,
         c = ear.next;
 
-
-    // if( (a.i == 84) || (b.i == 84) || (c.i == 84)) {
-    //     console.log("a:");
-    //     console.log(a);
-    //     console.log("b:");
-    //     console.log(b);
-    //     console.log("c:");
-    //     console.log(c);
-    // }
-
-    //console.log(a);
-    //console.log(b);
-    //console.log(c);
-
     if (area(a, b, c) >= 0) {
         return false;
     } // reflex, can't be an ear
-
-    temp.push({"a" : a, "b" : b, "c" : c});
 
     // triangle bbox; min & max are calculated like this for speed
     var minTX = a.x < b.x ? (a.x < c.x ? a.x : c.x) : (b.x < c.x ? b.x : c.x),
@@ -333,7 +307,8 @@ function isEarHashed(ear, minX, minY, invSize) {
         n = n.nextZ;
     }
 
-    temp.push({"tt" : true});
+    // Добавляем координаты точек каждого найденного треугольника
+    arPointTriangles.push({"a" : a, "b" : b, "c" : c});
 
     return true;
 }
@@ -585,29 +560,8 @@ function getLeftmost(start) {
     return leftmost;
 }
 
-var textPoints = "";
-var iter = 0;
-
 // check if a point lies within a convex triangle
 function pointInTriangle(ax, ay, bx, by, cx, cy, px, py) {
-
-    // textPoints += "var testPoint" + iter + " = [" + ax + "," + ay + "];\n";
-    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    // iter++;
-    // textPoints += "var testPoint" + iter + " = [" + bx + "," + by + "];\n";
-    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    // iter++;
-    // textPoints += "var testPoint" + iter + " = [" + cx + "," + cy + "];\n";
-    // textPoints += "drawPoint(testPoint" + iter + ", 'red');\n";
-    // iter++;
-    // textPoints += "var testPoint" + iter + " = [" + px + "," + py + "];\n";
-    // textPoints += "drawPoint(testPoint" + iter + ", 'green');\n";
-    // iter++;
-
-    // console.log(ax + " | " + ay);
-    // console.log(bx + " | " + by);
-    // console.log(cx + " | " + cy);
-    // console.log(px + " | " + py + "\n\n");
 
     //getCenter(bx, by, cx, cy, px, py);
 
