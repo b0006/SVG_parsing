@@ -102,49 +102,6 @@ var testPoints = [
     ]
 ];
 
-/*****
- * Принадлежность точки полигону
- * @type {Array}
- */
-
-// var xp = [];
-// var yp = [];
-//
-// for(var i = 0; i < testPoints.length; i++)
-// {
-//     for(var j = 0; j < testPoints[0].length; j++) {
-//         xp[j] = testPoints[i][j][0];
-//         yp[j] = testPoints[i][j][1];
-//     }
-// }
-//
-//
-//
-// var x = 2156;
-// var y = 3359;
-//
-// //var xp = new Array(-73,-33,7,-33); // Массив X-координат полигона
-// //var yp = new Array(-85,-126,-85,-45); // Массив Y-координат полигона
-// function inPoly(x,y){
-//     var npol = xp.length;
-//     var j = npol - 1;
-//     var c = 0;
-//     for (i = 0; i < npol;i++){
-//         if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-//             (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i])) {
-//             c = !c
-//         }
-//         j = i;
-//     }
-//     return c;
-// }
-// console.log(inPoly(x,y));
-
-/*****
- * Конец блока принадлежности
- * @type {HTMLElement | null}
- */
-
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -193,27 +150,6 @@ for (i = 0; i < result.length; i++) {
 
 ctx.lineJoin = 'round';
 
-// function drawTest() {
-//
-// }
-//
-// drawTest();
-
-// понял, тип точки повторяются и получаются всякие треугольники
-// нужно отфильтровать и получить нужные
-// всего треугольников в этом полигоне около 80, а по итогу кода сейчас якобы тут около 400
-
-
-// // получить 15% треугольников от числа всех треугольников
-// var percent = parseInt((15 * arraySquare.length) / 100);
-// var point = [];
-//
-// for(var i = 0; i < percent; i++){
-//     point = [arraySquare[i][0]["centerX"], arraySquare[i][0]["centerY"]];
-//     //drawPoint(point, "grey");
-// }
-
-
 for (i = 0; triangles && i < triangles.length; i += 3) {
     // drawPoly([triangles.slice(i, i + 3)], 'rgba(255,0,0,0.2)', 'rgba(255,255,0,0.2)');
     // drawPoly([triangles.slice(i, i + 3)], 'rgba(255,0,0,0.0)', 'rgba(255,0,0,0.3)');
@@ -225,8 +161,6 @@ function drawPoint(p, color) {
     ctx.fillStyle = color || 'grey';
     ctx.fillRect(x - 3, y - 3, 4, 4);
 }
-
-
 
 function drawPoly(rings, color, fill) {
     ctx.beginPath();
@@ -249,16 +183,24 @@ function drawPoly(rings, color, fill) {
     if (fill) ctx.fill('evenodd');
 }
 
-//------------------
+/**
+ * ПОЛУЧАЕМ КООРДИНАТЫ ВСЕХ ТРЕУГОЛЬНИКОВ
+ * СЧИТАЕМ ПЛОЩАДЬ КАЖДОГО ТРЕУГОЛЬНИКА
+ * НАХОДИМ ЦЕНТР ТЯЖЕСТИ КАЖДОГО ТРЕУГОЛЬНИКА
+ */
 var centerPoints = [];
 
 function getCenter(x1, y1, x2, y2, x3, y3)
 {
-    // считаем площадь текущего треугольника
+    /**
+     * СЧИТАЕМ ПЛОЩАДЬ ТЕКУЩЕГО ТРЕУГОЛЬНИКА
+     */
     var points = [(x1 - x3), (x2 - x3), (y1 - y3), (y2 - y3)];
     var square = parseInt( ((points[0] * points[3]) - (points[1] * points[2])) / 2);
 
-    // находим центр тяжести текущего треугольника
+    /**
+     * НАХОДИМ ЦЕНТР ТЯЖЕСТИ ТЕКУЩЕГО ТРЕУГОЛЬНИКА
+     */
     var mediumX = parseInt((x1 + x2 + x3) / 3);
     var mediumY = parseInt((y1 + y2 + y3) / 3);
 
@@ -267,60 +209,62 @@ function getCenter(x1, y1, x2, y2, x3, y3)
         "centerY" : mediumY,
         "square" : square
     });
-
 }
 
-for(var i = 0, ii = i + 1, iii = + 2; i < arPointTriangles.length; i++, ii++, iii++) {
-
-
+/**
+ * ФОРМИРУЕМ МАССИВ ИЗ КООРДИНАТ ЦЕНТРОВ КАЖДОГО ТРЕУГОЛЬНИКА
+ */
+for(var i = 0; i < arPointTriangles.length; i++) {
     getCenter(
         arPointTriangles[i]["a"]["x"], arPointTriangles[i]["a"]["y"],
         arPointTriangles[i]["b"]["x"], arPointTriangles[i]["b"]["y"],
         arPointTriangles[i]["c"]["x"], arPointTriangles[i]["c"]["y"]
     );
-
 }
 
-//сортируем массив по убыванию
+/**
+ * СОРТИРУЕМ МАССИВ ПО УБЫВАНИЮ
+ */
 centerPoints = centerPoints.sort(function (b, a) {
     return (a.square - b.square)
 });
 
-// console.log(arPointTriangles);
+/**
+ * @target_percent - необходимый процент
+ * @result_centers[]
+ * получить процент количества треугольников от числа всех треугольников
+ */
+var result_centers = [];
 
-// %
 var target_percent = 9;
-// получить % треугольников от числа всех треугольников
-var percent = parseInt((target_percent * centerPoints.length) / 100);
-for(var i = 0; i < percent; i++){
+var countPercentCenters = parseInt((target_percent * centerPoints.length) / 100);
+for(var i = 0; i < countPercentCenters; i++){
+    result_centers.push({"centerX" : centerPoints[i]["centerX"], "centerY" : centerPoints[i]["centerY"]})
     // drawPoint([centerPoints[i]["centerX"], centerPoints[i]["centerY"]], "green");
-    console.log(centerPoints[i]["centerX"]);
-    console.log(centerPoints[i]["centerY"]);
-    console.log("\n");
 }
 
 
-function drawTest() {
-    var testPoint1 = [2590, 3182];
-    drawPoint(testPoint1, '#ffffff');
-    var testPoint2 = [2483, 3099];
-    drawPoint(testPoint2, 'red');
-    var testPoint3 = [1925, 2905];
-    drawPoint(testPoint3, 'red');
-
-    var testPoint4 = [1842, 2924];
-    drawPoint(testPoint4, '#ffffff');
-    var testPoint5 = [1850, 2890];
-    drawPoint(testPoint5, 'red');
-    var testPoint6 = [1925, 2905];
-    drawPoint(testPoint6, 'red');
-
-    var testPoint7 = [1842, 2924];
-    drawPoint(testPoint7, '#ffffff');
-    var testPoint8 = [1850, 2890];
-    drawPoint(testPoint8, 'red');
-    var testPoint9 = [1925, 2905];
-    drawPoint(testPoint9, 'red');
-}
-
-// drawTest();
+// function drawTest() {
+//     var testPoint1 = [2590, 3182];
+//     drawPoint(testPoint1, '#ffffff');
+//     var testPoint2 = [2483, 3099];
+//     drawPoint(testPoint2, 'red');
+//     var testPoint3 = [1925, 2905];
+//     drawPoint(testPoint3, 'red');
+//
+//     var testPoint4 = [1842, 2924];
+//     drawPoint(testPoint4, '#ffffff');
+//     var testPoint5 = [1850, 2890];
+//     drawPoint(testPoint5, 'red');
+//     var testPoint6 = [1925, 2905];
+//     drawPoint(testPoint6, 'red');
+//
+//     var testPoint7 = [1842, 2924];
+//     drawPoint(testPoint7, '#ffffff');
+//     var testPoint8 = [1850, 2890];
+//     drawPoint(testPoint8, 'red');
+//     var testPoint9 = [1925, 2905];
+//     drawPoint(testPoint9, 'red');
+// }
+//
+// // drawTest();
