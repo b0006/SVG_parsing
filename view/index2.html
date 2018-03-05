@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Test app</title>
 
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
         <script src="../build.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
@@ -13,10 +13,37 @@
     <body>
 
         <input type="file" id="svg_files" accept="image/svg+xml"/>
-        <button id="go" name="go">Go</button>
+        <button id="go" name="go">Получить SVG</button>
+        <output id="list"></output>
 
         <output id="loaded_svgFile">
         </output>
+
+        <div id="vis"></div>
+
+        <script>
+            // Extract the width and height that was computed by CSS.
+            // var chartDiv = document.getElementById("vis");
+            // var width = chartDiv.clientWidth;
+            // var height = chartDiv.clientHeight;
+
+            // // load the external svg from a file
+            // d3.xml("svgfile2.svg", "image/svg+xml", function(xml) {
+            //     var importedNode = document.importNode(xml.documentElement, true);
+            //     d3.select("div#vis")
+            //         .each(function() {
+            //             this.appendChild(importedNode);
+            //         })
+            // });
+
+
+            $('body').on('click','#go', function(e){
+                e.preventDefault();
+                var t = $("#vis > svg");
+                console.log(t);
+            });
+
+        </script>
 
     </body>
 
@@ -25,3 +52,5 @@
     <script src="../public/javascripts/custom/inputSvgFile.js"></script>
 
 </html>
+
+
