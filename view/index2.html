@@ -4,17 +4,24 @@
         <meta charset="utf-8">
         <title>Test app</title>
 
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+
+        <script src="../build.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     </head>
 
     <body>
 
-        <input type="file" id="svg_files" name="files[]" accept="image/svg+xml"/>
-        <output id="list">
-            <br>
+        <input type="file" id="svg_files" accept="image/svg+xml"/>
+        <button id="go" name="go">Go</button>
+
+        <output id="loaded_svgFile">
         </output>
 
     </body>
 
+    <script src="../public/javascripts/custom/readSvgFile.js"></script>
+
     <script src="../public/javascripts/custom/inputSvgFile.js"></script>
+
 </html>
